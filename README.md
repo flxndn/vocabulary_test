@@ -33,5 +33,14 @@ Por defecto es 10.
 
 
 
+## Pendiente
+*  Guardar los logs de funcionamiento
+*  Añadir usuario (para los logs)
+*  Permitir varias respuestas
+*  Limitar las palabras repetidas por test
+*  Hacer un test con todas las palabras del fichero
+*  Generar un nuevo fichero con los errores que hay en el log
+*  Permitir la entrada de nuevo de palabra errónea para reforzar.
+
 
 

@@ -28,6 +28,14 @@ sub help{
 			Indica la cantidad de preguntas que tendrá el test.
 
 			Por defecto es $num.
+	* Pendiente
+		- Guardar los logs de funcionamiento
+		- Añadir usuario (para los logs)
+		- Permitir varias respuestas
+		- Limitar las palabras repetidas por test
+		- Hacer un test con todas las palabras del fichero
+		- Generar un nuevo fichero con los errores que hay en el log
+		- Permitir la entrada de nuevo de palabra errónea para reforzar.
 	";
 }
 #-------------------------------------------------------------------------------
@@ -65,7 +73,7 @@ for(my $i=0; $i<$num; $i++) {
 	$respuesta_final=~s/ *\([^\)]*\) *//;
 
 	my $n=$i+1;
-	print STDERR "$n. ¿$pregunta_final?\n";
+	print STDERR "$n. $pregunta_final: ";
 	my $contestacion=<STDIN>;
 	chomp $contestacion;
 
