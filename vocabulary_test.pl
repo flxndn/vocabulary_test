@@ -28,10 +28,23 @@ sub help{
 			Indica la cantidad de preguntas que tendrá el test.
 
 			Por defecto es $num.
+
+	* Fichero de vocabulario
+		Es un [[https://en.wikipedia.org/wiki/Tab-separated_values fichero tsv]] 
+		formado por dos columnas.
+
+		En la primera columna están las preguntas y en la segunda las respuestas.
+
+		Preguntas y respuestas se intercambian si se utiliza la opción -i.
+
+		El texto que se ponga entre paréntesis en la respuesta no se utiliza 
+		para comprobar la respuesta, tan sólo aparece cuando se pregunta.
+
+		Cuando una pregunta tiene varias posibles respuestas se separan con 
+		la barra inclinada (/).
 	* Pendiente
 		- Guardar los logs de funcionamiento
 		- Añadir usuario (para los logs)
-		- Permitir varias respuestas
 		- Limitar las palabras repetidas por test
 		- Hacer un test con todas las palabras del fichero
 		- Generar un nuevo fichero con los errores que hay en el log
@@ -71,20 +84,27 @@ for(my $i=0; $i<$num; $i++) {
 		$respuesta_final = $pregunta;
 	}
 	$respuesta_final=~s/ *\([^\)]*\) *//;
+	if($pregunta_final =~/\//) {
+		my @preguntas_finales=split " *\/ *", $pregunta_final;
+		$pregunta_final=$preguntas_finales[int(rand($#preguntas_finales+1))];
+	}
 
 	my $n=$i+1;
 	print STDERR "$n. $pregunta_final: ";
 	my $contestacion=<STDIN>;
 	chomp $contestacion;
 
-	my $palabra='';
-	if($contestacion eq $respuesta_final) {
+	my $palabra='ERROR';
+	foreach $posible (split " *\/ *", $respuesta_final) {
+		if($contestacion eq $posible) {
+			$palabra="OK";
+		}
+	}
+	if($palabra eq 'OK' ) {
 		$nota++;	
 		print STDERR "\tCorrecto\n";
-		$palabra="OK";
 	} else {
 		print STDERR "\tError. La traducción de «$pregunta_final» es «$respuesta_final».\n";
-		$palabra="ERROR";
 	}
 	$informe.="\t$palabra\t$pregunta\t$respuesta\n";
 }
