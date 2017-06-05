@@ -70,6 +70,8 @@ while( @ARGV >0 && $ARGV[0] =~/^-/) {
 # main
 #
 @lineas=<>;
+die "no encuentro el fichero" if ! @lineas;
+
 chomp @lineas;
 s/\r// for  @lineas;
 my $informe='';
